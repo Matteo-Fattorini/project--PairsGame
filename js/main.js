@@ -18,7 +18,7 @@ const app = new Vue({
         return 12;
       } else if (this.difficulty == "1") {
         return 24;
-      }
+      } //
     },
   },
 
