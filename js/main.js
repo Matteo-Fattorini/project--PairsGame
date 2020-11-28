@@ -5,11 +5,11 @@ const app = new Vue({
     symbols, //symbols class array from data
     actualSymbols: [], //random symbols from data, based on difficulty
     game: false, //true when start is pressed
-    currentCell: [],
-    firstStart: true,
-    guessedRight: 0,
-    score: 5000,
-    gameOver: false
+    currentCell: [], //current cell selected by user Maxlen 2
+    firstStart: true, //first click on board. Will show the entire board for 2 sec
+    guessedRight: 0, //if == symbols gameOver
+    score: 5000, //max score
+    gameOver: false //true when all guessed
   },
   computed: {
     diffSel() {
@@ -25,6 +25,7 @@ const app = new Vue({
  
 
   methods: {
+    //check if player won the game
     checkWinner() {
       if (this.difficulty == 0 && this.guessedRight >= 12 || this.difficulty == 1 && this.guessedRight >= 24 ) {
         this.gameOver = true;
@@ -75,8 +76,8 @@ const app = new Vue({
       return array;
     },
 
-    setgreen() {
-      if (this.firstStart) {
+    setgreen() {  //main function on click
+      if (this.firstStart) {  //if first click, show entire board for 2 sec
         for (let cell of this.$refs.listCell) {
           cell.classList.add("temporaryDisplay");
         }
@@ -90,13 +91,13 @@ const app = new Vue({
       }
       this.firstStart = false;
       let current = this.currentCell;
-
+    
       if (current.length == 2) {
         this.currentCell = [];
 
         currentClass = current[0].innerHTML;   //check if selected box have same symbols.
 
-        if (current[1].innerHTML == currentClass) {
+        if (current[1].innerHTML == currentClass) {  
           current.forEach((element) => element.classList.add("guessedRight"));
           this.guessedRight += 2
           this.checkWinner();
